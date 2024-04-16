@@ -1,6 +1,18 @@
 {
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node ."
+  },
+  "keywords": [],
+  "author": "IronWalrus68",
+  "license": "ISC",
   "dependencies": {
     "discord.js": "^14.14.1",
-    "init": "^0.1.2"
+    "dotenv": "^16.4.5",
+    "esm": "^3.2.25",
+    "minecraft-api": "^0.0.3"
   }
 }
