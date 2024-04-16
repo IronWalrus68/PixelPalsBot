@@ -56,11 +56,10 @@ client.on('interactionCreate', async interaction => {
     const userIgn = interaction.options.getString('userign');
     try{
     await ignInteraction(userIgn)
-    } catch {return await interaction.reply("failed to find uuid")}
-    //await interaction.reply('Failed to find UUID, check you spelt your username correctly.'
-    await interaction.reply(`
-Your IGN is ${userIgn}, 
-Your Discord name is: ${interaction.user.username}`);
+    } catch {
+      return await interaction.reply("failed to find uuid")
+      }
+    await interaction.reply(`Congrats ${interaction.user.username}, You're on the list!`);
   }
 });
 
