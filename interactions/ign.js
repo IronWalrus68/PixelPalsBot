@@ -3,6 +3,8 @@
 import MinecraftAPI from 'minecraft-api';
 import fs from 'fs/promises';
 
+const whitelistPath = "whitelist.json";
+
 // Find UUID from Minecraft API
 export async function findUUID(userIgn) {
     try {
@@ -13,19 +15,18 @@ export async function findUUID(userIgn) {
         return uuid;
     } catch (err) {
         // console.error(err);
-        throw null; // Return null or handle the error as needed
+        throw new Error('Username not found'); // Return null or handle the error as needed
     }
 }
 
 // Check if a users.json file exists, if not create a users.json file
 export async function touchUserStorage() {
     try {
-        await fs.readFile('whitelist.json');
+        await fs.readFile(whitelistPath);
         return;
     } catch {
-        await fs.appendFile('whitelist.json', '[]');
-        console.log('Created new whitelist.json file!');
-        return;
+        console.log('Failed to find the whitelist. adjust path');
+        throw new Error('Failed to find the whitelist. adjust path');
     }
 }
 
@@ -39,7 +40,7 @@ async function createUserObjectAndWrite(minecraftUsername, minecraftUUID) {
   
   try {
     // Read the current content of whitelist.json
-    const existingData = await fs.readFile('whitelist.json', 'utf8');
+    const existingData = await fs.readFile(whitelistPath, 'utf8');
     // Parse the existing JSON data into an array
     const usersArray = JSON.parse(existingData);
     
@@ -55,7 +56,7 @@ async function createUserObjectAndWrite(minecraftUsername, minecraftUUID) {
     // Convert the updated array back to a JSON string
     const updatedData = JSON.stringify(usersArray, null, 2);
     // Write the updated JSON data back to whitelist.json
-    await fs.writeFile('whitelist.json', updatedData, 'utf8');
+    await fs.writeFile(whitelistPath, updatedData, 'utf8');
     console.log(`New user object added to whitelist.json: ${minecraftUsername}`);
   } catch (error) {
     console.error('Error adding user object:', error);

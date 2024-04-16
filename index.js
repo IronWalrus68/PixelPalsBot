@@ -16,7 +16,7 @@ const commands = [
     description: 'Add your minecraft username to the pixal pp mc server whitelist!!',
     options: [
       {
-        name: 'userign',
+        name: 'username',
         type: 3,
         description: 'Your minecraft IGN',
         required: true,
@@ -57,7 +57,7 @@ client.on('interactionCreate', async interaction => {
     try{
     await ignInteraction(userIgn)
     } catch {
-      return await interaction.reply("failed to find uuid")
+      return await interaction.reply("failed to find uuid. Double check username spelling")
       }
     await interaction.reply(`Congrats ${interaction.user.username}, You're on the list!`);
   }
