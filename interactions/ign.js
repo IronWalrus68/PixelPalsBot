@@ -12,8 +12,8 @@ export async function findUUID(userIgn) {
         }
         return uuid;
     } catch (err) {
-        console.error(err);
-        return null; // Return null or handle the error as needed
+        // console.error(err);
+        throw null; // Return null or handle the error as needed
     }
 }
 
@@ -30,14 +30,13 @@ export async function touchUserStorage() {
 }
 
 // take usernames and uuid, make them into a json file. then add them to the users.json file.
-async function createUserObjectAndWrite(discordUsername, minecraftUsername, minecraftUUID) {
+async function createUserObjectAndWrite(minecraftUsername, minecraftUUID) {
   // Create the new user object
   const userObject = {
-    "discord username": discordUsername,
-    "minecraft username": minecraftUsername,
-    "minecraft UUID": minecraftUUID
+    "minecraft UUID": minecraftUUID,
+    "minecraft username": minecraftUsername
   };
-
+  
   try {
     // Read the current content of users.json
     const existingData = await fs.readFile('users.json', 'utf8');
@@ -46,7 +45,7 @@ async function createUserObjectAndWrite(discordUsername, minecraftUsername, mine
     // Push the new user object into the array
     usersArray.push(userObject);
     // Convert the updated array back to a JSON string
-    const updatedData = JSON.stringify(usersArray);
+    const updatedData = JSON.stringify(usersArray, null, 2);
     // Write the updated JSON data back to users.json
     await fs.writeFile('users.json', updatedData, 'utf8');
     console.log('New user object added to users.json');
@@ -55,9 +54,8 @@ async function createUserObjectAndWrite(discordUsername, minecraftUsername, mine
   }
 }
 
-export async function ignInteraction(Discordusername, userIgn) {
+export async function ignInteraction(userIgn) {
     const uuid = await findUUID(userIgn);
     await touchUserStorage();
-    createUserObjectAndWrite(Discordusername, userIgn, uuid);
-    // await interaction.reply(`Your IGN is ${userIgn}, your UUID is: ${uuid}, your Discord name is: ${Discordusername}`);
+    createUserObjectAndWrite(userIgn, uuid);
 }
