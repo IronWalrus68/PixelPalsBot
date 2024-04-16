@@ -1,9 +1,11 @@
 // interactions/ign.js
+import dotenv from 'dotenv';
+dotenv.config();
 
 import MinecraftAPI from 'minecraft-api';
 import fs from 'fs/promises';
 
-const whitelistPath = "whitelist.json";
+const whitelistPath = process.env.whitelistPath;
 
 // Find UUID from Minecraft API
 export async function findUUID(userIgn) {
@@ -34,8 +36,8 @@ export async function touchUserStorage() {
 async function createUserObjectAndWrite(minecraftUsername, minecraftUUID) {
   // Create the new user object
   const userObject = {
-    "minecraft UUID": minecraftUUID,
-    "minecraft username": minecraftUsername
+    "uuid": minecraftUUID,
+    "name": minecraftUsername
   };
   
   try {

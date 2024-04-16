@@ -53,7 +53,7 @@ client.on('interactionCreate', async interaction => {
   }
   // add users ign to mc server whitelist
   if (interaction.commandName === 'ign') {
-    const userIgn = interaction.options.getString('userign');
+    const userIgn = interaction.options.getString('username');
     try{
     await ignInteraction(userIgn)
     } catch {
