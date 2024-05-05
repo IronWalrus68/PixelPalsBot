@@ -4,7 +4,7 @@ const TOKEN = process.env.discordBotToken;
 const CLIENT_ID = process.env.discordBotClientId;
 
 import { Events, REST, Routes } from 'discord.js';
-import { ignInteraction } from './interactions/ign.js';
+import { ignInteraction, errorMessage } from './interactions/ign.js';
 
 const commands = [
   {
@@ -49,15 +49,17 @@ client.on('interactionCreate', async interaction => {
 
   // beep boop test
   if (interaction.commandName === 'beep') {
-    await interaction.reply('beep boop!');
+    await interaction.reply('boop!');
   }
   // add users ign to mc server whitelist
   if (interaction.commandName === 'ign') {
     const userIgn = interaction.options.getString('username');
+    console.log(userIgn)
     try{
     await ignInteraction(userIgn)
     } catch {
-      return await interaction.reply("failed to find uuid. Double check username spelling")
+      console.log(errorMessage())
+      return await interaction.reply(errorMessage)
       }
     await interaction.reply(`Congrats ${interaction.user.username}, You're on the list!`);
   }
