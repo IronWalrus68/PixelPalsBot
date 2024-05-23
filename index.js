@@ -54,7 +54,6 @@ client.on('interactionCreate', async interaction => {
   // add users ign to mc server whitelist
   if (interaction.commandName === 'ign') {
     const userIgn = interaction.options.getString('username');
-    console.log(userIgn)
     if (userIgn.length >= 17 || userIgn.length <= 2){
       return await interaction.reply(`This username is invalid. Check your spelling.`)
     }

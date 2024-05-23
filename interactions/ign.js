@@ -11,25 +11,17 @@ const whitelistPath = process.env.whitelistPath;
 // Find UUID from Minecraft API
 async function findUUID(userIgn) {
   try {
-    console.log('fire1')
     let userDataFromAPI;
     try {
     userDataFromAPI = await minecraftPlayer(userIgn);
     } catch{throw new Error('invalid name')}
-    console.log('fire2')
     if (!userDataFromAPI) {
-    console.log('fire3')
       throw new Error('Username not found'); // Handle non-existent usernames
     }
-    console.log('fire4')
     const uuid = userDataFromAPI.uuid; // "e76f96e9-b1da-4c1d-8d28-72e87c6aa80a"
     const username = userDataFromAPI.username; // "iron_walrus_68"
-    console.log(`Inside userDataFromAPI: ${uuid}`)
-    console.log(`Inside userDataFromAPI: ${username}`)
-    console.log('fire5')
     return { uuid, username };
   } catch (err) {
-    console.log("error in findUUID try catch")
     throw new Error('Username not found'); // Return null or handle the error as needed
   }
 }
@@ -38,10 +30,8 @@ async function findUUID(userIgn) {
 async function touchUserStorage() {
   try {
     await fs.readFile(whitelistPath);
-    console.log('file has been read')
     return;
   } catch {
-    console.log('Failed to find the whitelist. adjust path');
     throw new Error('Failed to find the whitelist. adjust path');
   }
 }
@@ -84,13 +74,9 @@ export async function ignInteraction(userIgn) {
   let uuid, username;
   try {
     ({ uuid, username } = await findUUID(userIgn));
-    console.log('success found findUUID');
   } catch (error) {
     throw new Error(error);
   }
-  console.log(`inside ignInteraction: ${uuid}`);
-  console.log(`inside ignInteraction: ${username}`);
-  // this now works
   await touchUserStorage();
   await createUserObjectAndWrite(uuid, username);
 }
