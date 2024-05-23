@@ -55,11 +55,14 @@ client.on('interactionCreate', async interaction => {
   if (interaction.commandName === 'ign') {
     const userIgn = interaction.options.getString('username');
     console.log(userIgn)
+    if (userIgn.length >= 17 || userIgn.length <= 2){
+      return await interaction.reply(`This username is invalid. Check your spelling.`)
+    }
     try{
     await ignInteraction(userIgn)
     } catch {
-      console.log(errorMessage())
-      return await interaction.reply(errorMessage)
+      await interaction.reply(errorMessage)
+      return console.log(errorMessage())
       }
     await interaction.reply(`Congrats ${interaction.user.username}, You're on the list!`);
   }

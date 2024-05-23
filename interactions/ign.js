@@ -11,14 +11,22 @@ const whitelistPath = process.env.whitelistPath;
 // Find UUID from Minecraft API
 async function findUUID(userIgn) {
   try {
-    const userDataFromAPI = await minecraftPlayer(userIgn);
+    console.log('fire1')
+    let userDataFromAPI;
+    try {
+    userDataFromAPI = await minecraftPlayer(userIgn);
+    } catch{throw new Error('invalid name')}
+    console.log('fire2')
     if (!userDataFromAPI) {
+    console.log('fire3')
       throw new Error('Username not found'); // Handle non-existent usernames
     }
+    console.log('fire4')
     const uuid = userDataFromAPI.uuid; // "e76f96e9-b1da-4c1d-8d28-72e87c6aa80a"
     const username = userDataFromAPI.username; // "iron_walrus_68"
     console.log(`Inside userDataFromAPI: ${uuid}`)
     console.log(`Inside userDataFromAPI: ${username}`)
+    console.log('fire5')
     return { uuid, username };
   } catch (err) {
     console.log("error in findUUID try catch")
